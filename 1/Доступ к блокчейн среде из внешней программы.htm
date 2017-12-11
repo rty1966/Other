@@ -1,0 +1,276 @@
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Блокчейн технологии развиваются стремительными темпами. Сегодня уже ни кого не удивишь Bitcoin ом или другой криптовалютой. Существует много разнообразных кошельков и систем.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Не редко перед разработчиками программного обеспечения встает задача связать свои программные продукты с системой блокчейн.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; В данной статье рассмотрим пример получения информации из системы Ерачейн. Установленное программное обеспечение системы Ерачейн будем называть нодой.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Программу, которой необходимо получить доступ к системе будем называть внешней программой. Для примера внешней программой будет выступать интернет браузер.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Обмен информацией между нодой и внешней программой осуществляется по протоколу HTTP посредством запросов GET или POST. Ответ получаем в формате JSON.&nbsp;&nbsp; <img alt="image" src="https://raw.githubusercontent.com/rty1966/Other/master/1/1.png" style="height:307px; width:591px" /><br />
+<cut/>
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size:14px">Нам понадобятся:</span></strong><br />
+1. Java. Берем здесь: <a href="https://www.java.com/ru">https://www.java.com/ru</a> и устанавливаем согласно инструкции.<br />
+2. Программное обеспечение ноды берем здесь: <a href="https://github.com/rty1966/ERA-4.2.02/archive/master.zip">https://github.com/rty1966/ERA-4.2.02/archive/master.zip</a>, распаковываем и сохраняем в любой директории на компьютере. В нашем случае сохраним в c:\block<br />
+3. Браузер. Firefox, Chrom и т.д.<br />
+<br />
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size:14px">Первый запуск</span></strong><br />
+Запускаем файл run.bat из директории c:\ block.<br />
+Выбираем язык системы и устанавливаем шрифт. Описание процесса приведено для Русского языка.<br />
+Если вы впервые работаете с Ерачейн &laquo;Создать новый кошелек&raquo;<br />
+Соглашаемся (или не соглашаемся) с лицензионным соглашением. Советую прочитать его внимательно т.к. там написано много интересного.<br />
+В открывшемся окне копируем Seed (Ctrl+C).<br />
+<strong>Очень важно:</strong> Сохраните Seed в секретном месте. Кто обладает Seed, тот имеет полный доступ к кошельку. Даже если вы уничтожите кошелек или компьютер, при вводе Seed на другом компьютере вся информация о вашем кошельке восстановится. В случае утраты Seed информация кошелька будет утеряна навсегда.<br />
+В следующем окне вставляем Seed (Ctrl+V) и указываем пароль для кошелька.<br />
+Немного ждем, пока нода создаст кошелек и выведет главное окно.<br />
+В главном Окне в левой панели выбираем пункт &laquo;Дополнительная информация&raquo;.<br />
+На открывшейся вкладке можно наблюдать за состоянием ноды.<br />
+<br />
+<img alt="image" src="https://raw.githubusercontent.com/rty1966/Other/master/1/3.png" style="height:675px; width:1081px" /></p>
+
+<p>При подключении к системе индикатор присоединения изменится с красного цвета на желтый и начнется синхронизация (чтение блоков).<br />
+<strong>Замечание:</strong> Подключения к системе занимает некоторое время(иногда до 10 минут).<br />
+<br />
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size:14px">Настройка ноды</span></strong><br />
+Заходим в меню &laquo;Файл&raquo; &laquo;Настройки&raquo;, и устанавливаем галочку &laquo;WEB включен&raquo;<br />
+<br />
+<img alt="image" src="https://raw.githubusercontent.com/rty1966/Other/master/1/2.png" /></p>
+
+<p>Нажимаем кнопку &laquo;Применить&raquo;.<br />
+После перезапуска Нода готова к работе с внешней программой.<br />
+<br />
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px"> Выполнение GET запроса</span></strong><br />
+Открываем браузер, в адресной строке пишем : 127.0.0.1:9047/api<br />
+На экран выведутся все запросы, которые вы можете отправлять ноде.<br />
+Дополнительно вы можете вызвать: 127.0.0.1:9047/apirecords<br />
+Давайте запросим у ноды последний блок. Для этого выполним GET запрос: 127.0.0.1:9047/api/lastblock<br />
+<br />
+<span style="font-size:12px"><strong>&nbsp;Получим ответ JSON</strong></span><br />
+&quot;reference&quot;:&quot;3ttojQuUTHsD85MpUf...eiDguu2ixgSTQpff2Shk4SErVXcjoMUNTX8bxVywcgJ&quot;,<br />
+&quot;blockATs&quot;:&quot;&quot;,<br />
+&quot;creator&quot;:&quot;75hXUtuRoKGCyhzps7LenhWnNtj9BeAF12&quot;,<br />
+&quot;signature&quot;:&quot;5HePJJyoo7nw6Xm64...ir6b3sybm4ypurg1DKMTJVufd3LQAow7Jo2AnD7neyQ5t&quot;,<br />
+&quot;fee&quot;:&quot;0.00008192&quot;,<br />
+&quot;transactions&quot;:[],<br />
+&quot;version&quot;:1,<br />
+&quot;generatingBalance&quot;:124885,<br />
+&quot;winValueTargeted&quot;:2870,<br />
+&quot;transactionsHash&quot;:&quot;HuPQsudxJC41ZFS7dRsyYp18RjNZMRJaVjnGv8HHo3Hr&quot;,<br />
+&quot;timestamp&quot;:1512707833333,<br />
+&quot;height&quot;:86330<br />
+<br />
+<span style="font-size:12px"><strong>Описание JSON:</strong></span>
+
+<table>
+	<tbody>
+		<tr>
+			<td>reference:</td>
+			<td>подпись предыдущего блока</td>
+		</tr>
+		<tr>
+			<td>blockATs:</td>
+			<td>зарезервировано</td>
+		</tr>
+		<tr>
+			<td>creator:</td>
+			<td>адрес создателя блока</td>
+		</tr>
+		<tr>
+			<td>signature:</td>
+			<td>подпись блока</td>
+		</tr>
+		<tr>
+			<td>fee:</td>
+			<td>сбор за блок</td>
+		</tr>
+		<tr>
+			<td>transactions:</td>
+			<td>список транзакций</td>
+		</tr>
+		<tr>
+			<td>version:</td>
+			<td>версия блока</td>
+		</tr>
+		<tr>
+			<td>generatingBalance:</td>
+			<td>баланс на счету создателя блока</td>
+		</tr>
+		<tr>
+			<td>winValueTargeted:</td>
+			<td>величина победы</td>
+		</tr>
+		<tr>
+			<td>transactionsHash:</td>
+			<td>ХЭШ транзакций</td>
+		</tr>
+		<tr>
+			<td>timestamp:</td>
+			<td>время в формате UNIX</td>
+		</tr>
+		<tr>
+			<td>height:</td>
+			<td>высота(номер) блока</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Получить информацию о 20-м блоке можно по запросу: 127.0.0.1:9047/api/blockbyheight/20<br />
+Все остальные команды выполняются аналогичным образом.<br />
+Теперь вы получили в свое распоряжение инструмент позволяющий делать много чего интересного, например, используя API, был создан мобильный кошелек для Android <a href="https://github.com/Codeevodevelopment/ERAWallet">https://github.com/Codeevodevelopment/ERAWallet</a><br />
+<br />
+<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size:14px">Список GET запросов</span></strong>
+
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td><strong>Команда</strong></td>
+			<td><strong>Описание</strong></td>
+			<td><strong>Пример</strong></td>
+		</tr>
+		<tr>
+			<td>height</td>
+			<td>высота последнего блока</td>
+			<td>127.0.0.1:9047/api/height</td>
+		</tr>
+		<tr>
+			<td>firstblock</td>
+			<td>Genesis блок</td>
+			<td>127.0.0.1:9047/api/</td>
+		</tr>
+		<tr>
+			<td>lastblock</td>
+			<td>последний блок</td>
+			<td>127.0.0.1:9047/api/</td>
+		</tr>
+		<tr>
+			<td>block/{signature}</td>
+			<td>получить блок по его сигнатуре</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>blockbyheight/{height}</td>
+			<td>получить блок по его высоте (номеру)</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>childblocksignature/{signature}</td>
+			<td>Получить блок следующий за блоком</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>blocksfromheight/{height}/{limit}</td>
+			<td>олучить limit блоков начиная с height блока</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>blockssignaturesfromheight/{height}/{limit}</td>
+			<td>Получить сигнатуры limit блоков начиная с height блока</td>
+			<td>http://127.0.0.1:9047/api/blockssignaturesfromheight/5/5</td>
+		</tr>
+		<tr>
+			<td>recordparse/{raw}</td>
+			<td>Создать транзакцию из {raw} массива байт</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>record/{signature}</td>
+			<td>Получить транзакцию по ее сигнатуре</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>recordbynumber/{height-sequence}</td>
+			<td>Получить транзакцию по номеру блока { height} и ее номере в блоке { sequence}</td>
+			<td>http://127.0.0.1:9047/api/recordbynumber/27115-1</td>
+		</tr>
+		<tr>
+			<td>addressvalidate/{address}</td>
+			<td>Является ли строка {address} адресом</td>
+			<td>http://127.0.0.1:9047/api/addressvalidate/7R4jwh5C83HLj7C1FiSbsGptMHqfAirr8R</td>
+		</tr>
+		<tr>
+			<td>addressassetbalance/{address}/{assetid}</td>
+			<td>Баланс адреса {address} для номера актива {assetid}</td>
+			<td>http://127.0.0.1:9047/api/addressassetbalance/7R4jwh5C83HLj7C1FiSbsGptMHqfAirr8R/1</td>
+		</tr>
+		<tr>
+			<td>addressassets/{address}</td>
+			<td>Балансы по всем активам адреса</td>
+			<td>http://127.0.0.1:9047/api/addressassets/7R4jwh5C83HLj7C1FiSbsGptMHqfAirr8R</td>
+		</tr>
+		<tr>
+			<td>addresspublickey/{address}</td>
+			<td>Открытый ключ адреса</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>assetheight</td>
+			<td>Максимальный номер актива</td>
+			<td>http://127.0.0.1:9047/api/assetheight</td>
+		</tr>
+		<tr>
+			<td>asset/{key}</td>
+			<td>Информация о активе по его номеру</td>
+			<td>http://127.0.0.1:9047/api/asset/1</td>
+		</tr>
+		<tr>
+			<td>assetdata/{key}</td>
+			<td>Получить изображения и иконку актива в формате BASE6</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>assetimage/{key</td>
+			<td>Получить изображение актива в бинарном виде</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>asseticon/{key}</td>
+			<td>Получить иконку актива в бинарном виде</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>assets</td>
+			<td>Получить список всех активов системы</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>assetsfilter/{filter_name_string}</td>
+			<td>Получить список активов по части его названия</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>personheight</td>
+			<td>Количество персон в системе</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>person/{key}</td>
+			<td>Информация о персоне по ее номеру {key}</td>
+			<td>http://127.0.0.1:9047/api/person/2</td>
+		</tr>
+		<tr>
+			<td>persondata/{key}</td>
+			<td>Получить изображения и иконку персоны в формате BASE64</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>personimage/{key}</td>
+			<td>Получить картинку персоны в бинарном виде</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>personkeybyaddress/{address}</td>
+			<td>Получить номер персоны по адресу</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>personbyaddress/{address}</td>
+			<td>Получить информацию о персоне по ее адресу</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>personsfilter/{filter_name_string}</td>
+			<td>Получить список персон для имя которых включает {filter_name_string}</td>
+			<td>&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; В следующей статье мы научимся создавать адреса кошелька, что приблизит нас к самому интересному &ndash; сбору транзакции и отправке её в блокчейн.</p>
+
+<p>&nbsp;</p>
+
